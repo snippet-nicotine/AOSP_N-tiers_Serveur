@@ -2,15 +2,18 @@ package document.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="nl_document")
+@Table(name="aosp2_document")
 public class Document implements Serializable{
 
 	private static final long serialVersionUID = 5639389737306562747L;
@@ -25,6 +28,10 @@ public class Document implements Serializable{
 	private String descriptif;
 	private int nbExemplairesDispo;
 	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="idLocalisation", unique=true)
+	private Localisation localisation;
+	
 	public Document(){
 		
 	}
@@ -34,6 +41,7 @@ public class Document implements Serializable{
 		this.titre = title;
 		this.descriptif = descriptif;
 		this.nbExemplairesDispo = nbExemplairesDispo;
+		this.localisation = new Localisation("lieu 1", "emplacement 1");
 	}
 	
 	

@@ -21,7 +21,7 @@ import utilisateur.entity.Jardinier;
 @LocalBean
 public class DaoPotager{
 	
-	@PersistenceContext(unitName="H2_Persistence")
+	@PersistenceContext(unitName="NL_Hibernate")
 	EntityManager em;
 
 	/**

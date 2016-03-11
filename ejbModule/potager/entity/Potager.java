@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import utilisateur.entity.Jardinier;
@@ -23,6 +27,7 @@ import utilisateur.entity.Jardinier;
  * Il est décomposé en plusieurs {@link potager.entity.Carre Carres} de potager. </p>
  */
 @Entity
+@Table(name="aosp2_potager")
 public class Potager implements Serializable{
 
 	private static final long serialVersionUID = -8065181790953611569L;
@@ -30,11 +35,10 @@ public class Potager implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected int         idPotager;
-	@Transient
-	protected Jardinier   proprietaire;	
 	
-	// Pour gérer la persistence
-	protected String   proprietaireNom;	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="idProprietaire", unique=true)
+	protected Jardinier   proprietaire;	
 	
 	protected LocalDate   dateCreation;	
 	@Transient
@@ -63,7 +67,6 @@ public class Potager implements Serializable{
 		this.codePostal   = codePostal;
 		this.proprietaire = proprietaire;
 		this.dateCreation = LocalDate.now();
-		this.proprietaireNom = proprietaire.getNom();
 	}
 	
 	public int getIdPotager() {
@@ -130,12 +133,4 @@ public class Potager implements Serializable{
 		this.codePostal = codePostal;
 	}
 
-	public String getProprietaireNom() {
-		return proprietaireNom;
-	}
-
-	public void setProprietaireNom(String proprietaireNom) {
-		this.proprietaireNom = proprietaireNom;
-	}
-	
 }
