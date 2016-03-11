@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,9 +40,16 @@ public class Potager implements Serializable{
 	@Transient
 	protected List<Carre> carres;
 	
+	@Column(length=20, nullable=false)
 	private String nom;
+	
+	@Column(nullable=false)
 	private int longueur;
+	
+	@Column(nullable=false)
 	private int largeur;
+	
+	@Column(length=5, nullable=false)
 	private String codePostal;
 	
 	public Potager(){

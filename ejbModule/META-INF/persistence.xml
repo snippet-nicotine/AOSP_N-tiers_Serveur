@@ -24,7 +24,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 			<property name="hibernate.show_sql"         value="true" />
 			<property name="hibernate.format_sql"       value="false" />
 			<property name="hibernate.use_sql_comments" value="true" />
-			<property name="hibernate.default_schema"   value="stag04" />
+			<property name="hibernate.default_schema"   value="STAG04" />
 		</properties>
 	</persistence-unit>
 	
