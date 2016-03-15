@@ -13,14 +13,13 @@ import document.dao.exception.DaoDocumentGetException;
 import document.dao.exception.DaoDocumentModificationException;
 import document.dao.exception.DaoDocumentQueryException;
 import document.dao.exception.DaoDocumentSuppressionException;
+import document.dao.exception.DaoLocalisationException;
 import document.entity.Document;
+import document.entity.Localisation;
 import document.service.command.CommandeSupprimer;
 import document.service.command.HistoriqueDocument;
 import document.service.command.IUndoCommand;
-import document.service.exception.CPDocumentException;
-import document.service.exception.DimensionDocumentException;
-import document.service.exception.NomDocumentException;
-import document.service.exception.ProprietaireDocumentException;
+import document.service.exception.DocumentException;
 
 @Stateful
 @LocalBean
@@ -32,11 +31,11 @@ public class ControlleurDocument {
 	HistoriqueDocument historique;
 	
 	// TODO: Refactorer dans DocumentManager
-	public Document creerDocument(String title, String descriptif, int nbExemplairesDispo) 
-			throws NomDocumentException, CPDocumentException, ProprietaireDocumentException, DimensionDocumentException, DaoDocumentAjoutException{
+	public Document creerDocument(String title, String descriptif, int nbExemplairesDispo, Localisation localisation) 
+			throws DocumentException, DaoDocumentAjoutException{
 		
 		Document document = null;
-		document = new Document(title, descriptif, nbExemplairesDispo);
+		document = new Document(title, descriptif, nbExemplairesDispo, localisation);
 		checkDocument(document);
 		
 		return daoGestionDocument.ajouterDocument(document);
@@ -51,7 +50,7 @@ public class ControlleurDocument {
 		return pattern.matcher(codePostal).matches();
 	}
 	
-	public Document modifierDocument(Document document) throws DaoDocumentModificationException, NomDocumentException, CPDocumentException, ProprietaireDocumentException, DimensionDocumentException{
+	public Document modifierDocument(Document document) throws DaoDocumentModificationException, DocumentException{
 		
 		System.out.println("******** service.modifier: " + document);
 		checkDocument(document);
@@ -79,7 +78,7 @@ public class ControlleurDocument {
 		return daoGestionDocument.getDocument(idDocument);
 	}
 	
-	private void checkDocument(Document document) throws NomDocumentException, CPDocumentException, DimensionDocumentException{
+	private void checkDocument(Document document) throws DocumentException{
 		
 		//TODO: Implementer le check
 		
@@ -90,6 +89,10 @@ public class ControlleurDocument {
 	}
 	public int getNombreAnnulations() {
 		return historique.getNbAnnulations();
+	}
+
+	public List<Localisation> listerLocalisations() throws DaoLocalisationException {
+		return daoGestionDocument.listerLocalisation();
 	}
 	
 }

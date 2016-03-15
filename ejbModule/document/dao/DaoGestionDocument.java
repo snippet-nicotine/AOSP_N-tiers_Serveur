@@ -7,8 +7,9 @@ import document.dao.exception.DaoDocumentGetException;
 import document.dao.exception.DaoDocumentModificationException;
 import document.dao.exception.DaoDocumentQueryException;
 import document.dao.exception.DaoDocumentSuppressionException;
+import document.dao.exception.DaoLocalisationException;
 import document.entity.Document;
-import utilisateur.entity.Jardinier;
+import document.entity.Localisation;
 
 
 public interface DaoGestionDocument {
@@ -19,7 +20,13 @@ public interface DaoGestionDocument {
 	public void    supprimerDocument(int idDocument) throws DaoDocumentSuppressionException, DaoDocumentGetException;
 	
 	public List<Document> listerDocument() throws DaoDocumentQueryException;
-	public List<Document> listerDocument(Jardinier proprietaire);
-	public List<Document> listerDocument(String codePostal);
+	
+	public Localisation ajouterLocalisation(Localisation localisation) throws DaoLocalisationException;
+	public Localisation getLocalisation(int idLocalisation) throws DaoLocalisationException;
+	public Localisation modifierDocument(Localisation localisation) throws DaoLocalisationException;
+	public void         supprimerLocalisation(int idLocalisation) throws DaoLocalisationException;
+	
+	public List<Localisation> listerLocalisation() throws DaoLocalisationException;
+
 	
 }

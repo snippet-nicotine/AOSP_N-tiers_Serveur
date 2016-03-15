@@ -11,7 +11,9 @@ import document.dao.exception.DaoDocumentGetException;
 import document.dao.exception.DaoDocumentModificationException;
 import document.dao.exception.DaoDocumentQueryException;
 import document.dao.exception.DaoDocumentSuppressionException;
+import document.dao.exception.DaoLocalisationException;
 import document.entity.Document;
+import document.entity.Localisation;
 import utilisateur.entity.Jardinier;
 
 @Stateless
@@ -20,6 +22,8 @@ public class FacadeDaoGestionDocument implements DaoGestionDocument{
 	
 	@EJB
 	DaoDocument daoDocument;
+	@EJB
+	DaoLocalisation daoLocalisation;
 
 	@Override
 	public Document ajouterDocument(Document document) throws DaoDocumentAjoutException {
@@ -48,17 +52,29 @@ public class FacadeDaoGestionDocument implements DaoGestionDocument{
 	}
 
 	@Override
-	public List<Document> listerDocument(Jardinier proprietaire) {
-		return daoDocument.listerDocument(proprietaire);
+	public Localisation ajouterLocalisation(Localisation localisation) throws DaoLocalisationException {
+		return daoLocalisation.ajouterLocalisation(localisation);
 	}
 
 	@Override
-	public List<Document> listerDocument(String codePostal) {
-		return daoDocument.listerDocument(codePostal);
+	public Localisation getLocalisation(int idLocalisation) throws DaoLocalisationException {
+		return daoLocalisation.getLocalisation(idLocalisation);
 	}
-	
-	
 
+	@Override
+	public Localisation modifierDocument(Localisation localisation) throws DaoLocalisationException {
+		return daoLocalisation.modifierLocalisation(localisation);
+	}
 
+	@Override
+	public void supprimerLocalisation(int idLocalisation) throws DaoLocalisationException {
+		daoLocalisation.supprimerLocalisation(idLocalisation);
+		
+	}
+
+	@Override
+	public List<Localisation> listerLocalisation() throws DaoLocalisationException {
+		return daoLocalisation.listerLocalisation();
+	}
 
 }

@@ -12,14 +12,12 @@ import document.dao.exception.DaoDocumentGetException;
 import document.dao.exception.DaoDocumentModificationException;
 import document.dao.exception.DaoDocumentQueryException;
 import document.dao.exception.DaoDocumentSuppressionException;
+import document.dao.exception.DaoLocalisationException;
 import document.entity.Document;
+import document.entity.Localisation;
 import document.service.command.HistoriqueDocument;
 import document.service.controlleurs.ControlleurDocument;
-import document.service.exception.CPDocumentException;
-import document.service.exception.DimensionDocumentException;
-import document.service.exception.NomDocumentException;
-import document.service.exception.ProprietaireDocumentException;
-import utilisateur.entity.Jardinier;
+import document.service.exception.DocumentException;
 
 @Stateless
 @Remote(ServiceGestionDocument.class)
@@ -32,12 +30,11 @@ public class FacadeServiceGestionDocument implements ServiceGestionDocument{
 	HistoriqueDocument historique;
 
 	@Override
-	public Document creerDocument(String title, String descriptif, int nbExemplairesDispo) 
-			throws NomDocumentException, CPDocumentException, ProprietaireDocumentException, 
-				   DimensionDocumentException, DaoDocumentAjoutException 
+	public Document creerDocument(String title, String descriptif, int nbExemplairesDispo, Localisation localisation) 
+			throws DocumentException, DaoDocumentAjoutException 
 	{
 		
-		return controlleurDocument.creerDocument(title, descriptif, nbExemplairesDispo);
+		return controlleurDocument.creerDocument(title, descriptif, nbExemplairesDispo, localisation);
 		
 	}
 
@@ -49,7 +46,7 @@ public class FacadeServiceGestionDocument implements ServiceGestionDocument{
 	}
 
 	@Override
-	public Document modifierDocument(Document document) throws DaoDocumentModificationException, NomDocumentException, CPDocumentException, ProprietaireDocumentException, DimensionDocumentException {	
+	public Document modifierDocument(Document document) throws DaoDocumentModificationException, DocumentException {	
 		
 		return controlleurDocument.modifierDocument(document);
 		
@@ -71,11 +68,10 @@ public class FacadeServiceGestionDocument implements ServiceGestionDocument{
 
 	@Override
 	public Document ajouterDocument(Document document)
-			throws NomDocumentException, CPDocumentException, ProprietaireDocumentException, 
-			       DimensionDocumentException, DaoDocumentAjoutException 
+			throws DocumentException, DaoDocumentAjoutException 
 	{
 		
-		return controlleurDocument.creerDocument(document.getTitre(), document.getDescriptif(), document.getNbExemplairesDispo() );
+		return controlleurDocument.creerDocument(document.getTitre(), document.getDescriptif(), document.getNbExemplairesDispo(), document.getLocalisation());
 	
 	}
 
@@ -87,6 +83,11 @@ public class FacadeServiceGestionDocument implements ServiceGestionDocument{
 	@Override
 	public int getNombreAnnulations() {
 		return controlleurDocument.getNombreAnnulations();
+	}
+
+	@Override
+	public List<Localisation> listerLocalisation() throws DaoLocalisationException{
+		return controlleurDocument.listerLocalisations();
 	}
 
 	

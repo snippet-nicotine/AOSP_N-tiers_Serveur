@@ -1,13 +1,13 @@
 package document.service.exception;
 
-public class NomDocumentException extends Exception {
+public class DocumentException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3353867119605824199L;
 
-	public NomDocumentException(String message) {
+	public DocumentException(String message) {
 		super(message);
 	}
 

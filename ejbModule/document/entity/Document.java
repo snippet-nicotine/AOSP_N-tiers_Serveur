@@ -36,12 +36,17 @@ public class Document implements Serializable{
 		
 	}
 	
-	public Document(String title, String descriptif, int nbExemplairesDispo) {
+	public Document(String title, String descriptif, int nbExemplairesDispo, Localisation localisation) {
 		super();
 		this.titre = title;
 		this.descriptif = descriptif;
 		this.nbExemplairesDispo = nbExemplairesDispo;
-		this.localisation = new Localisation("lieu 1", "emplacement 1");
+		
+		if(localisation == null){
+			this.localisation = new Localisation("lieu auto", "emplacement auto");			
+		} else {
+			this.localisation = localisation;
+		}
 	}
 	
 	
@@ -74,6 +79,14 @@ public class Document implements Serializable{
 	public String toString() {
 		return "Document [id=" + id + ", titre=" + titre + ", descriptif=" + descriptif + ", nbExemplairesDispo="
 				+ nbExemplairesDispo + "]";
+	}
+
+	public Localisation getLocalisation() {
+		return localisation;
+	}
+
+	public void setLocalisation(Localisation localisation) {
+		this.localisation = localisation;
 	}
 	
 	
